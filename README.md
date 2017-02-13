@@ -4,8 +4,8 @@ phpMusicLibrary is a project to create a simple online music database. The idea 
 
 ### Prerequisites
 
-PHP 5.3 or later
-MySQL 4.1.3 or later
+*PHP 5.3 or later
+*MySQL 4.1.3 or later
 
 ### Installing
 
