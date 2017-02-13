@@ -21,5 +21,3 @@ define("CAN_REGISTER", "any");                     // Who can register?
 define("DEFAULT_ROLE", "member");                  // What is the default permission?
 
 define("SECURE", FALSE);                           // Development use
-
-?>

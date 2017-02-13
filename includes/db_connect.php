@@ -17,5 +17,3 @@ include_once 'config.php';
 
 // Establish a MySQL connection
 $mysqli = new mysqli(SQLHOST, SQLUSER, SQLPASSWORD, SQLDBNAME);
-
-?>
