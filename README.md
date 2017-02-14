@@ -11,6 +11,12 @@ phpMusicLibrary is a project to create a simple online music database. The idea 
 
 Coming soon! I need to write the application first!
 
+## Changelog
+
+#### Version 0.1
+* Initial build
+* Login feature in progress 13/02/17 as first step
+
 ## Authors
 
 * **Mike Oldfield** - *Initial work* - [Nimraynn](https://github.com/nimraynn)
