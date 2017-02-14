@@ -1,3 +1,14 @@
+/*
+ * phpMusicLibrary
+ * version 0.1
+ *
+ * @nimraynn (https://github.com/nimraynn)
+ *
+ * includes/process_login.php
+ * 13/02/2017 20:37
+ * 
+ */
+
 function formhash(form, password) {
 
     // Create a new element input.
