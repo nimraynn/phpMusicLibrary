@@ -52,11 +52,11 @@ include_once 'includes/functions.php';          // Fetch our functions
         </ul>
 
         <form action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" method="POST" name="registration_form">
-            Username: <input type='text' name='username' id='username' /><br />
-            Email Address: <input type='text' name='email' id='email' /><br />
-            Password: <input type='password' name='password' id='password' /><br />
-            Confirm: <input type='password' name='confirmpwd' id='confirmpwd' /><br />
-            <input type='button' value='Register' onclick='return regformhash(this.form, this.form.username, this.form.email, this.form.password, this.form.confirmpwd);' />
+            Username: <input type="text" name="username" id="username" /><br />
+            Email Address: <input type="text" name="email" id="email" /><br />
+            Password: <input type="password" name="password" id="password" /><br />
+            Confirm: <input type="password" name="confirmpwd" id="confirmpwd" /><br />
+            <input type="button" value="Register" onclick="return regformhash(this.form, this.form.username, this.form.email, this.form.password, this.form.confirmpwd);" />
         </form>
         <p>Return to the <a href="index.php">login page</a>.</p>
     </body>
