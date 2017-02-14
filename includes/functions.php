@@ -156,7 +156,7 @@ function login($email, $password, $mysqli) {
 // Purpose: Check if we are currently logged in_array
 function login_check($mysqli) {
 
-    // Check if all our session variables are set_error_handler
+    // Check if all session variables are set 
     if (isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
 
         $user_id = $_SESSION['user_id'];
@@ -164,15 +164,15 @@ function login_check($mysqli) {
         $username = $_SESSION['username'];
 
         // Get the user-agent string
-        $user_Browser = $_SERVER['HTTP_USER_AGENT'];
+        $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
         if ($stmt = $mysqli->prepare("SELECT password FROM muslib_users WHERE id = ? LIMIT 1")) {
 
-            // Bind $user_id to paramter
+            // Bind $user_id to parameter
             $stmt->bind_param('i', $user_id);
 
             // Execute prepared query
-            $stmt->execute();
+            $stmt->execute();   
             $stmt->store_result();
 
             // Check that we only received one result
@@ -183,35 +183,36 @@ function login_check($mysqli) {
                 $stmt->fetch();
                 $login_check = hash('sha512', $password . $user_browser);
 
-                if (hash_equals($login_check, $login_string)) {
+                if ($login_check == $login_string) {
 
                     // Logged in
                     return true;
 
                 } else {
 
-                    // Not logged in
+                    // Not logged in 
                     return false;
 
                 }
 
             } else {
 
-                // Not logged in
+                // Not logged in 
                 return false;
 
             }
 
         } else {
 
-            // Not logged in
-            return false;
+            // Could not prepare statement
+            header("Location: ../error.php?err=Database error: cannot prepare statement");
+            exit();
 
         }
 
     } else {
 
-        // Not logged in
+        // Not logged in 
         return false;
 
     }
