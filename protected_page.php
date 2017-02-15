@@ -8,7 +8,7 @@
     @nimraynn (https://github.com/nimraynn)
 
     protected_page.php
-    14/02/2017 15:22
+    15/02/2017 11:31
 
 */
 
@@ -18,7 +18,31 @@ include_once 'includes/functions.php';      // Fetch our configuration & functio
 // Include database connection and functions here.  See 3.1. 
 sec_session_start();
 
+// Check if the user is logged in. If they're not...
+if (login_check($mysqli) == FALSE) :
+
 ?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Secure Login: Access Denied</title>
+        <link rel="stylesheet" href="styles/main.css" />
+    </head>
+    <body>
+        <p>
+            <span class="error">You are not authorized to access this page, please login</span>
+        </p>
+    </body>
+</html>
+
+<?php
+
+// But if the user is logged in
+elseif (login_check($mysqli) == TRUE) :
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,15 +51,11 @@ sec_session_start();
         <link rel="stylesheet" href="styles/main.css" />
     </head>
     <body>
-        <?php if(login_check($mysqli) == TRUE) : ?>
         <p>Welcome, <?php echo htmlentities($_SESSION['username']); ?>!</p>
         <p>
             This is some stuff. Loads of stuff!
         </p>
-        <?php else : ?>
-        <p>
-            <span class="error">You are not authorized to access this page, please login</span>
-        </p>
-        <?php endif; ?>
     </body>
 </html>
+
+<?php endif; ?>
