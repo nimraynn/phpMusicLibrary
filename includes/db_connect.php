@@ -8,7 +8,7 @@
     @nimraynn (https://github.com/nimraynn)
 
     includes/db_connect.php
-    13/02/2017 19:48
+    15/02/2017 10:56
     
 */
 
@@ -17,3 +17,12 @@ include_once 'config.php';
 
 // Establish a MySQL connection
 $mysqli = new mysqli(SQLHOST, SQLUSER, SQLPASSWORD, SQLDBNAME);
+
+// Check if we received a connection error
+if ($mysqli->connect_error) {
+
+    // If we did, redirect to the error page
+    header("Location: ../error.php?err=Unable to connect to MySQL in db_connect.php");
+    exit();
+
+}

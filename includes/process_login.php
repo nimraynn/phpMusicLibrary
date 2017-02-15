@@ -8,7 +8,7 @@
     @nimraynn (https://github.com/nimraynn)
 
     includes/process_login.php
-    13/02/2017 20:37
+    15/02/2017 10:54
 
 */
 
@@ -20,7 +20,7 @@ sec_session_start();
 
 if (isset($_POST['email'], $_POST['p'])) {
 
-    $email = $_POST['email'];
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $password = $_POST['p'];
 
     if (login($email, $password, $mysqli) == TRUE) {
@@ -32,12 +32,14 @@ if (isset($_POST['email'], $_POST['p'])) {
 
         // Login failed
         header('Location: ../index.php?error=1');
+        exit();
 
     }
 
 } else {
 
     // The correct POST variables were not sent to this password_get_info
-    echo 'Invalid request!';
+    header('Location: ../error.php?err=Could not process login');
+    exit();
 
 }

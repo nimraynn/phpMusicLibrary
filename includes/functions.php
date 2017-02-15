@@ -8,7 +8,7 @@
     @nimraynn (https://github.com/nimraynn)
 
     includes/functions.php
-    13/02/2017 19:55
+    15/02/2017 09:57
 
 */
 
@@ -26,7 +26,7 @@ function checkbrute($user_id, $mysqli) {
     // Count login attempts from the past 2 hours
     $valid_attempts = $now - (2 * 60 * 60);
 
-    if ($stmt = $mysqli->prepare("SELECT time FROM muslib_loginattempts WHERE user_id = ? AND time > '$valid_attempts;")) {
+    if ($stmt = $mysqli->prepare("SELECT time FROM muslib_loginattempts WHERE user_id = ? AND time > '$valid_attempts'")) {
         
         $stmt->bind_param('i', $user_id);
 
@@ -36,10 +36,20 @@ function checkbrute($user_id, $mysqli) {
 
         // Check if we received more than 5 rows
         if ($stmt->num_rows > 5) {
+
             return true;
+
         } else {
+
             return false;
+
         }
+
+    } else {
+
+        // Could not create a prepared statement
+        header("Location: ../error.php?err=Database error: cannot prepare statement on line 51");
+        exit();
 
     }
 
@@ -92,18 +102,21 @@ function esc_url($url) {
 function login($email, $password, $mysqli) {
 
     // Use prepared statements to prevent SQL injection
-    if ($stmt = $mysqli->prepare("SELECT id, username, password FROM muslib_users WHERE email = ? LIMIT 1")) {
+    if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM muslib_users WHERE email = ? LIMIT 1")) {
         
         $stmt->bind_param('s', $email);     // Bind $email to parameter
         $stmt->execute();                   // Execute the prepared query
         $stmt->store_result();              // Store the result of the query
 
         // Bind results to variables
-        $stmt->bind_result($user_id, $username, $db_password);
+        $stmt->bind_result($user_id, $username, $db_password, $salt);
         $stmt->fetch();
 
+        // Hash the password with the unique salt
+        $password = hash('sha512', $password, $salt);
+
         // Check that we only return one result
-        if ($stmt->num_rows ==1) {
+        if ($stmt->num_rows == 1) {
             
             // Now let's check if the account is locked due to too many login attempts
             if (checkbrute($user_id, $mysqli) == true) {
@@ -114,7 +127,7 @@ function login($email, $password, $mysqli) {
             } else {
 
                 // Check if the password matches the database
-                if (password_verify($password, $db_password)) {
+                if ($db_password == $password) {
                     
                     // Password is correct
                     // Get the user-agent string
@@ -122,6 +135,7 @@ function login($email, $password, $mysqli) {
                     // XSS protection as we might print this value
                     $user_id = preg_replace("/[^0-9]+/", "", $user_id);
                     $_SESSION['user_id'] = $user_id;
+                    // XSS protection as we might print this value
                     $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username);
                     $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512', $db_password . $user_browser);
@@ -134,7 +148,13 @@ function login($email, $password, $mysqli) {
                     // Password is not correct. Login unsuccessful
                     // Record this login attempt
                     $now = time();
-                    $mysqli->query("INSERT INTO muslib_loginattempts(user_id, time) VALUES ('$user_id', '$now')");
+                    if (!$mysqli->query("INSERT INTO muslib_loginattempts(user_id, time) VALUES ('$user_id', '$now')")) {
+                        
+                        header("Location: ../error.php?err=Database error: login_attempts");
+                        exit();
+
+                    }
+
                     return false;
 
                 }
@@ -148,12 +168,18 @@ function login($email, $password, $mysqli) {
 
         }
 
+    } else {
+
+        // Could not create a prepared statement
+        header("Location: ../error.php?err=Database error: cannot prepare statement on line 174");
+        exit();
+
     }
 
 }
 
 // Function: login_check(mysqli)
-// Purpose: Check if we are currently logged in_array
+// Purpose: Check if we are currently logged in
 function login_check($mysqli) {
 
     // Check if all session variables are set 
@@ -205,7 +231,7 @@ function login_check($mysqli) {
         } else {
 
             // Could not prepare statement
-            header("Location: ../error.php?err=Database error: cannot prepare statement");
+            header("Location: ../error.php?err=Database error: cannot prepare statement on line 234");
             exit();
 
         }
@@ -224,12 +250,11 @@ function login_check($mysqli) {
 function sec_session_start() {
 
     $session_name = 'sec_session_id';       // Set a custom session name
-    session_name($session_name);
+    $secure = SECURE; 
+    
+    $httponly = true;       // This stops JavaScript being able to access the session ID
 
-    $secure = true; 
-    $httpOnly = true;
-
-    // Force session to only use cookies
+    // Forces sessions to only use cookies
     if (ini_set('session.use_only_cookies', 1) === FALSE) {
         
         // Throw an error if we can't use only cookies
@@ -241,12 +266,10 @@ function sec_session_start() {
 
     // Fetch our current cookie params
     $cookieParams = session_get_cookie_params();
-    session_set_cookie_params($cookieParams["lifetime"],
-        $cookieParams["path"],
-        $cookieParams["domain"],
-        $secure,
-        $httpOnly);
+    session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
 
+    // session_name($session_name);    // Set the session name to the one we set above
+    
     // Start the PHP session
     session_start();
     session_regenerate_id(true);

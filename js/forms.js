@@ -32,10 +32,7 @@ function formhash(form, password) {
 function regformhash(form, uid, email, password, conf) {
 
     // Check that each field has a value
-    if (uid.value == ''         ||
-        email.value == ''       ||
-        password.value == ''    ||
-        conf.value == '') {
+    if (uid.value == '' || email.value == '' || password.value == '' || conf.value == '') {
             
             // Create an alert
             alert('You must provide all the requested details. Please try again');

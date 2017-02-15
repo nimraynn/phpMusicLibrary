@@ -8,7 +8,7 @@
     @nimraynn (https://github.com/nimraynn)
 
     includes/register.inc.php
-    14/02/2017 13:32
+    15/02/2017 10:50
     
 */
 
@@ -96,26 +96,29 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
     // Check if the error message is empty
     if (empty($error_msg)) {
 
-        // Create hashed password using the password_hash() function
-        // This function salts it with a random salt and can be verified
-        // with the password_verify() function
-        $password = password_hash($password, PASSWORD_BCRYPT);
+        // Create a random salt
+        $random_salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
+
+        // Create salted password
+        $password = hash('sha512', $password, $random_salt);
 
         // Insert the new user into the database
-        if ($insert_stmt = $mysqli->prepare("INSERT INTO muslib_users (username, email, password) VALUES (?, ?, ?)")) {
+        if ($insert_stmt = $mysqli->prepare("INSERT INTO muslib_users (username, email, password, salt) VALUES (?, ?, ?, ?)")) {
 
-            $insert_stmt->bind_param('sss', $username, $email, $password);
+            $insert_stmt->bind_param('ssss', $username, $email, $password, $random_salt);
 
             // Execute the prepared query
             if (!$insert_stmt->execute()) {
 
                 header('Location: ../error.php?err=Registration failure: INSERT');
+                exit();
 
             }
 
         }
 
         header('Location: ./register_success.php');
+        exit();
 
     }
 
