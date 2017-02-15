@@ -125,7 +125,8 @@ if (login_check($mysqli) == TRUE) {
 	</div>
 	<div id="body2">
 		<div id="home2">
-			<div id="content2">
+			<div class="content2">
+				<div>
 				<h2>Latest</h2>
 					<ul class="blog2">
 						<li>
