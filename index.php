@@ -38,7 +38,7 @@ if (login_check($mysqli) == TRUE) {
 <head>
 	<meta charset="UTF-8">
 	<title>phpMusicLibrary: Home</title>
-	<link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Raleway|Titillium+Web" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/JavaScript" src="js/sha512.js"></script>
 	<script type="text/JavaScript" src="js/forms.js"></script>

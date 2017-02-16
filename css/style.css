@@ -58,7 +58,7 @@ p a:hover,
 }
 #header h1 {
 	float: left;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-size: 36px;
 	font-weight: normal;
 	/*letter-spacing: 0.07em;*/
@@ -112,7 +112,7 @@ p a:hover,
 #body div#contact h1 {
 	border-bottom: 1px solid #000000;
 	color: #000000;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-size: 52px;
 	font-weight: normal;
 	/*letter-spacing: 0.025em;*/
@@ -196,7 +196,7 @@ p a:hover,
 }
 #body div#home div.content div ul.blog li div h3,
 #body div#wide div.content div ul.blog li div h3 {
-	font-family: 'Lato', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-size: 14px;
 	font-weight: normal;
 	line-height: 24px;
@@ -223,7 +223,7 @@ p a:hover,
 #body div#home div.sidebar div h2,
 #body div#contact div.sidebar div h2 {
 	color: #58595b;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-size: 24px;
 	font-weight: normal;
 	/*letter-spacing: 0.05em;*/
@@ -268,7 +268,7 @@ p a:hover,
 #body div#contact div.sidebar div h3 {
 	display: block;
 	font-size: 16px;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-weight: normal;
 	line-height: 24px;
 	margin: 0;
@@ -373,7 +373,7 @@ p a:hover,
 #body div.services div h2,
 #body div#testimonials h2 {
 	color: #000000;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-size: 24px;
 	font-weight: normal;
 	margin: 0;
@@ -407,7 +407,7 @@ p a:hover,
 #body div.blog div.sidebar div h2,
 #body div#about div h2 {
 	color: #58595b;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
 	font-size: 18px;
 	font-weight: normal;
 	margin: 0;
