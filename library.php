@@ -7,7 +7,7 @@
 
     @nimraynn (https://github.com/nimraynn)
 
-    protected_page.php
+    library.php
     15/02/2017 11:31
 
 */
@@ -27,7 +27,7 @@ if (login_check($mysqli) == FALSE) :
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Secure Login: Access Denied</title>
+        <title>phpMusicLibrary: Access Denied</title>
         <link rel="stylesheet" href="styles/main.css" />
     </head>
     <body>
@@ -47,7 +47,7 @@ elseif (login_check($mysqli) == TRUE) :
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Secure Login: Protected Page</title>
+        <title>phpMusicLibrary: Library</title>
         <link rel="stylesheet" href="styles/main.css" />
     </head>
     <body>
